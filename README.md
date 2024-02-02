@@ -40,17 +40,22 @@ and some (such as the RAII resource wrappers) can even be used in kernel mode.
 This project is documented in [its GitHub wiki](https://github.com/Microsoft/wil/wiki). Feel free to contribute to it!
 
 # Consuming WIL
+
 WIL follows the "live at head" philosophy, so you should feel free to consume WIL directly from the GitHub repo however you please: as a GIT submodule, symbolic link, download and copy files, etc. and update to the latest version at your own cadence. Alternatively, WIL is available using a few package managers, mentioned below. These packages will be updated periodically, likely to average around once or twice per month.
 
 ## Consuming WIL via NuGet
+
 WIL is available on nuget.org under the name [Microsoft.Windows.ImplementationLibrary](https://www.nuget.org/packages/Microsoft.Windows.ImplementationLibrary/). This package includes the header files under the [include](include) directory as well as a [.targets](packaging/nuget/Microsoft.Windows.ImplementationLibrary.targets) file.
 
 ## Consuming WIL via vcpkg
+
 WIL is also available using [vcpkg](https://github.com/microsoft/vcpkg) under the name [wil](https://github.com/microsoft/vcpkg/blob/master/ports/wil/portfile.cmake). Instructions for installing packages can be found in the [vcpkg GitHub docs](https://github.com/microsoft/vcpkg/blob/master/docs/examples/installing-and-using-packages.md). In general, once vcpkg is set up on the system, you can run:
+
 ```cmd
 C:\vcpkg> vcpkg install wil:x86-windows
 C:\vcpkg> vcpkg install wil:x64-windows
 ```
+
 Note that even though WIL is a header-only library, you still need to install the package for all architectures/platforms you wish to use it with. Otherwise, WIL won't be added to the include path for the missing architectures/platforms. Execute `vcpkg help triplet` for a list of available options.
 
 # Building/Testing
@@ -87,6 +92,7 @@ You can execute `init.cmd --help` for a summary of available options.
 ### Visual Studio setup
 
 To generate a Visual Studio solution with IntelliSense:
+
 ```cmd
 C:\wil> scripts\init.cmd -c msvc -g msbuild
 ```
@@ -100,10 +106,13 @@ You can also get decent IntelliSense just by opening the repo directory in Visua
 The scripts use a common directory pattern of `build/$(compiler)$(arch)$(type)` for the build output root. E.g. `build/clang64debug` when using Clang as the compiler, x64 as the architecture, and Debug as the build type. It is this directory where you will want to build from.
 
 For example, if you initialized using the command above (`scripts\init.cmd -c clang -g ninja -b debug`), you can build the tests like so:
+
 ```cmd
 C:\wil\build\clang64debug> ninja
 ```
+
 Or, if you want to only build a single test (e.g. for improved compile times):
+
 ```cmd
 C:\wil\build\clang64debug> ninja witest.noexcept
 ```
@@ -117,11 +126,13 @@ generator.
 ## Build everything
 
 If you are at the tail end of of a change, you can execute the following to get a wide range of coverage:
+
 ```cmd
 C:\wil> scripts\init_all.cmd
 C:\wil> scripts\build_all.cmd
 C:\wil> scripts\runtests.cmd
 ```
+
 Note that this will only test for the architecture that corresponds to the command window you opened. You will want to
 repeat this process for the other architecture (e.g. by using the `x86 Native Tools Command Prompt for VS 2022` in addition to `x64`).
 
